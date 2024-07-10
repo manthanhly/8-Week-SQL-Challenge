@@ -1,1 +1,1 @@
-Howdie! I’m Man /muhn/, a seasoned professional in the oil and gas industry with over 6 years of experience in Completion - Hydraulic Fracturing. Recently, I’ve set my sights on data engineering and am actively learning and growing in this field.
+I am working on the [8 Week SQL Challenge](https://8weeksqlchallenge.com/getting-started/) by the [Data With Danny](https://bit.ly/datawithdanny-8wsc)
