@@ -2,7 +2,9 @@
 
 <img src="https://github.com/user-attachments/assets/880dba8f-c3ea-4deb-8825-260b93c5acfa" width="500" height="500">
 
-## Q&A 
+## Questions & Answers
+
+### A. Pizza Metrics
 
 **1. How many pizzas were ordered?**
 
@@ -22,10 +24,10 @@ Answer:
 **2. How many unique customer orders were made?**
 
 ````sql
-select 
-	count(distinct order_id) as unique_customer_count 
+select
+  count(distinct order_id) as unique_customer_count 
 from 
-	customer_orders
+  customer_orders
 ````
 
 Answer:
@@ -35,12 +37,12 @@ Answer:
 
 ***
 
-**3. How many unique customer orders were made?**
+**3. How many successful orders were delivered by each runner?**
 
 ````sql
 select
   runner_id,
-  count(*) as unique_customer_orders
+  count(*) as orders_count
 from
   runner_orders 
 where
@@ -52,7 +54,7 @@ order by
 ````
 
 Answer:
-| runner_id | unique_customer_orders|
+| runner_id | orders_count|
 |-----------|-------|
 |         1 |     4 |
 |         2 |     3 |
@@ -86,4 +88,35 @@ Answer:
 |        1 |           9 |
 |        2 |           3 |
 
+***
 
+**5. How many Vegetarian and Meatlovers were ordered by each customer?**
+
+````sql
+select 
+  co.customer_id, 
+  pn.pizza_name, 
+  count(co.order_id) as pizza_count
+from
+  customer_orders co 
+join
+  pizza_names pn
+on
+  co.pizza_id = pn.pizza_id 
+group by
+  co.customer_id,
+  pn.pizza_name
+order by
+  co.customer_id
+````
+Answer:
+| customer_id | pizza_name | pizza_count |
+|-------------|------------|-------------|
+|         101 | Meatlovers |           2 |
+|         101 | Vegetarian |           1 |
+|         102 | Meatlovers |           2 |
+|         102 | Vegetarian |           1 |
+|         103 | Meatlovers |           3 |
+|         103 | Vegetarian |           1 |
+|         104 | Meatlovers |           3 |
+|         105 | Vegetarian |           1 |
