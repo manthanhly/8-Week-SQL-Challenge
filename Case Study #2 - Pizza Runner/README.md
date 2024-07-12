@@ -75,7 +75,7 @@ join
 on
   co.order_id = ro.order_id 
 where
-  pickup_time <> 'null'
+  pickup_time <> 'null'	#'null' values = no delivery 
 group by
   pizza_id 
 order by
