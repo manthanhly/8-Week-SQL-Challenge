@@ -4,11 +4,11 @@
 
 ***
 
-**2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value**
+**2. What is the monthly distribution of <code>trial</code> plan <code>start_date</code> values for our dataset - use the start of the month as the group by value**
 
 ***
 
-**3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name**
+**3. What plan <code>start_date</code> values occur after the year 2020 for our dataset? Show the breakdown by count of events for each <code>plan_name</code>**
 
 ***
 
@@ -26,7 +26,7 @@
 
 ***
 
-**7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?**
+**7. What is the customer count and percentage breakdown of all 5 <code>plan_name</code> values at <code>2020-12-31?</code>**
 
 ***
 
