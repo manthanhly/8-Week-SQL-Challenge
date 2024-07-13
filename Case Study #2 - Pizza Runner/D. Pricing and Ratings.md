@@ -9,12 +9,12 @@
 
 **4. Using your newly generated table - can you join all of the information together to form a table which has the following information for successful deliveries?**
 
-- customer id
-- order_id
-- runner_id
-- rating
-- order_id
-- pickup_time
+- <code>customer id</code>
+- <code>order_id</code>
+- <code>runner_id</code>
+- <code>rating</code>
+- <code>order_id</code>
+- <code>pickup_time</code>
 - Time between order and pickup
 - Delivery duration
 - Average speed
