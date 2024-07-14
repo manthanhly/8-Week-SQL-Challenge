@@ -1,3 +1,5 @@
+### Reporting Challenge
+
 Write a single SQL script that combines all of the previous questions into a scheduled report that the Balanced Tree team can run at the beginning of each month to calculate the previous month’s values.
 
 Imagine that the Chief Financial Officer (which is also Danny) has asked for all of these questions at the end of every month.
