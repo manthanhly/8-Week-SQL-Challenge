@@ -1,6 +1,6 @@
 ### Index Analysis
 
-The <code>index_value is a measure which can be used to reverse calculate the average composition for Fresh Segments’ clients.
+The <code>index_value</code> is a measure which can be used to reverse calculate the average composition for Fresh Segments’ clients.
 
 Average composition can be calculated by dividing the <code>composition</code> column by the <code>index_value</code> column rounded to 2 decimal places.
 
