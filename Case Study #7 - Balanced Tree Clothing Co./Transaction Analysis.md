@@ -1,10 +1,40 @@
 ### Transaction Analysis
 
 **1. How many unique transactions were there?**
+````sql
+select 
+	count(distinct txn_id) as unique_transactions_count
+from 
+	sales
+````
+Answer:
+| unique_transactions_count |
+|---------------------------|
+|                      2500 |
 
 ***
 
 **2. What is the average unique products purchased in each transaction?**
+````sql
+with sum_table as (
+select 
+	txn_id,
+	sum(qty) as total_products -- each transaction already has unique products id, so we get the total qty for each transaction
+from 
+	sales
+group by
+	txn_id
+)
+
+select 
+	round(avg(total_products),1) as average_products_purchased
+from 
+	sum_table
+````
+Answer:
+| average_products_purchased |
+|----------------------------|
+|                        18.1 |
 
 ***
 
