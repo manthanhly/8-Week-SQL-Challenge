@@ -13,7 +13,7 @@ group by
 	pd.product_name 
 ````
 Answer:
-| Product Name                     | Total Qty |
+| product_name                   | total_qty |
 |----------------------------------|-----------|
 | White Tee Shirt - Mens           |      3800 |
 | Navy Solid Socks - Mens          |      3792 |
@@ -43,7 +43,7 @@ group by
 	pd.product_name 
 ````
 Answer:
-| Product Name                     | Total Revenue Before Discount |
+| product_name            | total_revenue_before_discount |
 |----------------------------------|-------------------------------|
 | White Tee Shirt - Mens           |                       152000  |
 | Navy Solid Socks - Mens          |                       136512  |
@@ -73,7 +73,7 @@ group by
 	pd.product_name 
 ````
 Answer:
-| Product Name                     | Total Discount |
+| product_name                 |total_discount|
 |----------------------------------|----------------|
 | White Tee Shirt - Mens           |          17968 |
 | Navy Solid Socks - Mens          |          16059 |
