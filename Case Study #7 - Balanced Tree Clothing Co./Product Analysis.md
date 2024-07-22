@@ -346,4 +346,42 @@ Answer:
 ***
 
 **10. What is the most common combination of at least 1 quantity of any 3 products in a 1 single transaction?**
+````sql
+with new_table as (
+select 
+	s.txn_id,
+	s.prod_id,
+	pd.product_name,
+	pd.style_id
+from 
+	sales s 
+join 
+	product_details pd on s.prod_id = pd.product_id 
+where
+	s.qty > 0 -- with at least 1 quantity 
+)
+
+select 
+	nt1.product_name as product_name_1,
+	nt2.product_name as product_name_2,
+	nt3.product_name as product_name_3,
+	count(*) as total_appear
+from 
+	new_table nt1 -- joining 3 times to get 3 columns due to combination of 3
+join 
+	new_table nt2 on nt1.txn_id = nt2.txn_id and nt1.style_id < nt2.style_id -- using style_id because they are interger and easier to compare, if we use product_name - we will have repetitive combination of names 
+join 
+	new_table nt3 on nt2.txn_id = nt3.txn_id and nt2.style_id < nt3.style_id
+group by 
+	nt1.product_name,
+	nt2.product_name,
+	nt3.product_name
+order by 
+	count(*) desc
+limit 1
+````
+Answer:
+| product_name_1                | product_name_2          | product_name_3               | total_appear |
+|-------------------------------|-------------------------|-------------------------------|--------------|
+| Grey Fashion Jacket - Womens | White Tee Shirt - Mens | Teal Button Up Shirt - Mens  |         352  |
 
