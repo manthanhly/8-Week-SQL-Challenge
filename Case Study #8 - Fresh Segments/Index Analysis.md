@@ -131,6 +131,67 @@ Answer:
 ***
 
 **4. What is the 3 month rolling average of the max average composition value from September 2018 to August 2019 and include the previous top ranking interests in the same output shown below.**
+````sql
+with average_composition_table as (
+select ime.interest_id,
+	ima.interest_name,
+	ime.month_year,
+	round((ime.composition/ime.index_value)::numeric,2) as average_composition
+from interest_metrics ime
+join interest_map ima
+on ime.interest_id = ima.id
+)
+, rank_table as (
+select interest_name,
+	month_year,
+	average_composition,
+	rank() over (partition by month_year order by average_composition desc) as ranking
+from average_composition_table
+)
+, max_table as (
+select interest_name,
+	month_year,
+	average_composition as max_index_composition
+from rank_table 
+where ranking = 1 -- fixing the max of for each month, also needs to show interest_name
+)
+
+, combined_table as (
+select interest_name,
+	month_year,
+	max_index_composition,
+	avg(max_index_composition) over (order by month_year rows between 2 preceding and current row) as _3_month_moving_avg, -- moving average function
+	lag(interest_name,1) over (order by month_year) as _1_month_ago_name,
+	lag(max_index_composition,1) over (order by month_year) as _1_month_ago_value,
+	lag(interest_name,2) over (order by month_year) as _2_months_ago_name,
+	lag(max_index_composition,2) over (order by month_year) as _2_months_ago_value
+from max_table
+)
+
+select month_year,
+	interest_name,
+	max_index_composition,
+	round(_3_month_moving_avg,2),
+	concat(_1_month_ago_name,': ',_1_month_ago_value) as _1_month_ago,
+	concat(_2_months_ago_name,': ',_2_months_ago_value) as _2_month_ago
+from combined_table
+where month_year >= '2018-09-01'
+````
+Answer:
+| month_year | interest_name                | max_index_composition | round | _1_month_ago                     | _2_month_ago                     |
+|------------|------------------------------|-----------------------|-------|---------------------------------|---------------------------------|
+| 2018-09-01 | Work Comes First Travelers   |                 8.26 |  7.61 | Las Vegas Trip Planners: 7.21    | Las Vegas Trip Planners: 7.36    |
+| 2018-10-01 | Work Comes First Travelers   |                 9.14 |  8.20 | Work Comes First Travelers: 8.26 | Las Vegas Trip Planners: 7.21    |
+| 2018-11-01 | Work Comes First Travelers   |                 8.28 |  8.56 | Work Comes First Travelers: 9.14 | Work Comes First Travelers: 8.26 |
+| 2018-12-01 | Work Comes First Travelers   |                 8.31 |  8.58 | Work Comes First Travelers: 8.28 | Work Comes First Travelers: 9.14 |
+| 2019-01-01 | Work Comes First Travelers   |                 7.66 |  8.08 | Work Comes First Travelers: 8.31 | Work Comes First Travelers: 8.28 |
+| 2019-02-01 | Work Comes First Travelers   |                 7.66 |  7.88 | Work Comes First Travelers: 7.66 | Work Comes First Travelers: 8.31 |
+| 2019-03-01 | Alabama Trip Planners        |                 6.54 |  7.29 | Work Comes First Travelers: 7.66 | Work Comes First Travelers: 7.66 |
+| 2019-04-01 | Solar Energy Researchers     |                 6.28 |  6.83 | Alabama Trip Planners: 6.54      | Work Comes First Travelers: 7.66 |
+| 2019-05-01 | Readers of Honduran Content  |                 4.41 |  5.74 | Solar Energy Researchers: 6.28   | Alabama Trip Planners: 6.54      |
+| 2019-06-01 | Las Vegas Trip Planners      |                 2.77 |  4.49 | Readers of Honduran Content: 4.41| Solar Energy Researchers: 6.28   |
+| 2019-07-01 | Las Vegas Trip Planners      |                 2.82 |  3.33 | Las Vegas Trip Planners: 2.77    | Readers of Honduran Content: 4.41|
+| 2019-08-01 | Cosmetics and Beauty Shoppers|                 2.73 |  2.77 | Las Vegas Trip Planners: 2.82    | Las Vegas Trip Planners: 2.77    |
 
 ***
 
