@@ -2,6 +2,18 @@
 
 **1. Which interests have been present in all <code>month_year</code> dates in our dataset?**
 
+Finding the total unique month_year
+````sql
+select count(distinct ime.month_year) as month_year_count
+from interest_metrics ime
+inner join interest_map ima
+on ime.interest_id = ima.id
+````
+Answer:
+| month_year_count |
+|------------------|
+|               14 |
+
 ***
 
 **2. Using this same <code>total_months</code> measure - calculate the cumulative percentage of all records starting at 14 months - which <code>total_months</code> value passes the 90% cumulative percentage value?**
