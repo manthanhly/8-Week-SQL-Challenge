@@ -111,4 +111,42 @@ From a business perspective, removing interest_ids with fewer than 6 months of a
 ***
 
 **5. After removing these interests - how many unique interests are there for each month?**
+````sql
+with months_table as (
+select interest_id,
+	count(*) as total_months -- counting ids appearance 
+from interest_metrics
+group by interest_id
+)
+
+, filtered_table as (
+select interest_id
+from months_table
+where total_months > 6 -- removing the interests
+)
+
+select month_year,
+	count(distinct im.interest_id) as unique_interests
+from interest_metrics im 
+join filtered_table ft 
+on im.interest_id = ft.interest_id
+group by month_year
+````
+Answer:
+| month_year | unique_interests |
+|------------|------------------|
+| 2018-07-01 |              701 |
+| 2018-08-01 |              743 |
+| 2018-09-01 |              767 |
+| 2018-10-01 |              844 |
+| 2018-11-01 |              919 |
+| 2018-12-01 |              976 |
+| 2019-01-01 |              957 |
+| 2019-02-01 |             1050 |
+| 2019-03-01 |             1046 |
+| 2019-04-01 |             1013 |
+| 2019-05-01 |              817 |
+| 2019-06-01 |              792 |
+| 2019-07-01 |              823 |
+| 2019-08-01 |             1033 |
 
