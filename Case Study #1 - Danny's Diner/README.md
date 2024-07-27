@@ -12,7 +12,8 @@ Danny’s Diner, a new restaurant specializing in sushi, curry, and ramen, needs
 
 **1. What is the total amount each customer spent at the restaurant?**
 ````sql
-select customer_id, sum(price) as total_amount 
+select customer_id,
+     sum(price) as total_amount 
 from dannys_diner.sales a
 join dannys_diner.menu b on a.product_id = b.product_id
 group by customer_id
@@ -30,7 +31,7 @@ Answer:
 **2. How many days has each customer visited the restaurant?**
 ````sql
 select customer_id, 
-  count(distinct order_date) as days_visited
+      count(distinct order_date) as days_visited
 from dannys_diner.sales 
 group by customer_id
 order by customer_id
@@ -48,8 +49,8 @@ Answer:
 ````sql
 with rankings as (
 select customer_id, 
-	product_name, 
-	dense_rank() over (partition by customer_id order by order_date) as ranks 
+     product_name, 
+     dense_rank() over (partition by customer_id order by order_date) as ranks 
 from dannys_diner.sales a 
 join dannys_diner.menu b on a.product_id = b.product_id
  ) 
@@ -124,8 +125,7 @@ Answer:
 **6. Which item was purchased first by the customer after they became a member?**
 ````sql
 with ranking as (
-select 
-a.customer_id,
+select a.customer_id,
       b.product_name,
       dense_rank() over (partition by a.customer_id order by a.order_date) as rank
 from dannys_diner.sales a
@@ -221,7 +221,7 @@ Answer:
 ````sql
 with points_count as (
 select a.customer_id,
-	a.order_date,
+    a.order_date,
     b.product_name,
     b.price,
     case
@@ -253,9 +253,8 @@ Answer:
 
 **Join All The Things**
 ````sql
-select
-	a.customer_id,
-  	to_char(a.order_date, 'yyyy-mm-dd') as order_date,
+select a.customer_id,
+    to_char(a.order_date, 'yyyy-mm-dd') as order_date,
     b.product_name,
     b.price,
     case 
@@ -275,8 +274,7 @@ order by a.customer_id,
 **Ranking Of Customer Products**
 ````sql
 with memberstatus as (
-select
-	a.customer_id,
+select	a.customer_id,
     to_char(a.order_date, 'yyyy-mm-dd') as order_date,
     b.product_name,
     b.price,
@@ -291,7 +289,7 @@ left join dannys_diner.members c on a.customer_id = c.customer_id
 )
     
 select customer_id,
-	order_date,
+    order_date,
     product_name,
     price,
     member,
