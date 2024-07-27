@@ -10,10 +10,10 @@ When Danny saw an Instagram post about “80s Retro Styling and Pizza Is The Fut
 
 [A. Pizza Metrics](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/A.%20Pizza%20Metrics.md)
 
-B. Runner and Customer Experience
+[B. Runner and Customer Experience](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/B.%20Runner%20and%20Customer%20Experience.md)
 
-C. Ingredient Optimisation
+[C. Ingredient Optimisation](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/C.%20Ingredient%20Optimisation.md)
 
-D. Pricing and Ratings
+[D. Pricing and Ratings](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/D.%20Pricing%20and%20Ratings.md)
 
-E. Bonus Questions
+[E. Bonus Questions](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/D.%20Pricing%20and%20Ratings.md)
