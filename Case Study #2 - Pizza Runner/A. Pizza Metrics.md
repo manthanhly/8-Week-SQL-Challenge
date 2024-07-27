@@ -4,10 +4,8 @@
 **1. How many pizzas were ordered?**
 
 ````sql
-select
-  count(*) as total_ordered
-from
-  customer_orders
+select	count(*) as total_ordered
+from	customer_orders
 ````
 Answer: 
 | total_ordered |
@@ -19,10 +17,8 @@ Answer:
 **2. How many unique customer orders were made?**
 
 ````sql
-select
-  count(distinct order_id) as unique_customer_count 
-from 
-  customer_orders
+select	count(distinct order_id) as unique_customer_count 
+from	customer_orders
 ````
 
 Answer:
@@ -35,17 +31,12 @@ Answer:
 **3. How many successful orders were delivered by each runner?**
 
 ````sql
-select
-  runner_id,
-  count(*) as orders_count
-from
-  runner_orders 
-where
-  pickup_time <> 'null'
-group by
-  runner_id 
-order by
-  runner_id
+select	runner_id,
+	count(*) as orders_count
+from	runner_orders 
+where	pickup_time <> 'null'
+group by runner_id 
+order by runner_id
 ````
 
 Answer:
