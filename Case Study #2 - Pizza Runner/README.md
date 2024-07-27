@@ -1,4 +1,4 @@
-# Case Study #2 - Pizza_Runner
+# Case Study #2 - Pizza_Runner [:pizza:](https://8weeksqlchallenge.com/case-study-2/)
 
 <img src="https://8weeksqlchallenge.com/images/case-study-designs/2.png" width="500" height="500">
 
