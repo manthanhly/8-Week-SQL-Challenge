@@ -8,7 +8,7 @@ When Danny saw an Instagram post about “80s Retro Styling and Pizza Is The Fut
 
 ## Questions & Answers
 
-A. Pizza Metrics
+[A. Pizza Metrics](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/A.%20Pizza%20Metrics.md)
 
 B. Runner and Customer Experience
 
