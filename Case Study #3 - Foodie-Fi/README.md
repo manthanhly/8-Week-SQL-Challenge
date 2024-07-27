@@ -8,3 +8,7 @@ Danny saw an opportunity in the subscription-based market and launched Foodie-Fi
 
 ## Questions & Answers
 
+[A. Customer Journey](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%233%20-%20Foodie-Fi/A.%20Customer%20Journey.md)
+
+[B. Data Analysis Questions](https://github.com/manthanhly/mly/blob/main/Case%20Study%20%233%20-%20Foodie-Fi/B.%20Data%20Analysis%20Questions.md)
+
