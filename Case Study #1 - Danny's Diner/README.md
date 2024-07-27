@@ -2,6 +2,10 @@
 
 <img src="https://8weeksqlchallenge.com/images/case-study-designs/1.png" width="500" height="500">
 
+## Introduction
+
+Danny’s Diner, a new restaurant specializing in sushi, curry, and ramen, needs help analyzing customer data to improve experiences and guide business decisions. This project involves using sample data to provide insights into customer behavior and spending patterns.
+
 ## Questions & Answers
 
 ### Case Study Questions
