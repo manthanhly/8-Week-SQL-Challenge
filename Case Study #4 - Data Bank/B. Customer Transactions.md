@@ -105,7 +105,8 @@ Answer: Showing only 3 customers
 
 **5. What is the percentage of customers who increase their closing balance by more than 5%?**
 
-- Scenario 1 - back to back month changes & repetive customers who have more than 1 time of increasing their balance by more than 5%
+- Scenario 1 - back to back month changes & customers who have more than 1 time of increasing their balance by more than 5%
+  
 ````sql
 with sum_table as (
 select customer_id,
@@ -155,3 +156,41 @@ Answer:
 |-------------------------|
 |                  20.97  |
 
+- Scenario 2 - customers who have more than 1 time of increasing their balance by more than 5%, does not require back to back month improvement, and use all the provided information and date
+
+```sql
+with sum_table as (
+select customer_id,
+	(date_trunc('month',txn_date) + interval '1 month' - interval '1 day')::date as month_end,
+	sum(case
+		when txn_type = 'deposit' then txn_amount else txn_amount*(-1)
+		end) as total_amount
+from customer_transactions
+group by customer_id, date_trunc('month',txn_date) + interval '1 month' - interval '1 day'
+order by customer_id, date_trunc('month',txn_date) + interval '1 month' - interval '1 day'
+),
+
+month_table as (
+select customer_id,
+	month_end,
+	sum(total_amount) over (partition by customer_id order by month_end) as month_closing,
+	lag(total_amount) over (partition by customer_id order by month_end) as previous_month_closing
+from sum_table
+),
+
+percentage_table as (
+select *,
+	(month_closing/previous_month_closing-1)*100 as changed_percentage,
+	case when (month_closing/previous_month_closing-1)*100 > 5
+		and month_closing > previous_month_closing then 1 else 0 end as marks
+from month_table
+where previous_month_closing is not null
+)
+
+select round((sum(marks)/ count(marks)::numeric)*100,2) as percentage_of_customers
+from percentage_table
+````
+Answer:
+| percentage_of_customers |
+|-------------------------|
+|                  22.79  |
