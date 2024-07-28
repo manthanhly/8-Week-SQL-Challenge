@@ -105,4 +105,53 @@ Answer: Showing only 3 customers
 
 **5. What is the percentage of customers who increase their closing balance by more than 5%?**
 
+- Scenario 1 - back to back month changes & repetive customers who have more than 1 time of increasing their balance by more than 5%
+````sql
+with sum_table as (
+select customer_id,
+	txn_date,
+	(date_trunc('month',txn_date) + interval '1 month' - interval '1 day')::date as month_end,
+	sum(case
+		when txn_type = 'deposit' then txn_amount else txn_amount*(-1)
+		end) as total_amount
+from customer_transactions
+group by customer_id, date_trunc('month',txn_date) + interval '1 month' - interval '1 day', txn_date
+order by customer_id, date_trunc('month',txn_date) + interval '1 month' - interval '1 day'
+),
+
+balance_table as (
+select customer_id,
+	month_end,
+	txn_date,
+	(date_trunc('month',txn_date) - interval '1 day')::date as previous_month_end,
+	sum(total_amount) over (partition by customer_id order by txn_date) as month_closing,
+	row_number () over (partition by customer_id, month_end order by txn_date desc) as orders
+from sum_table
+),
+
+compare_table as (
+select bt1.customer_id,
+	bt1.month_end,
+	bt1.month_closing as current_month_balance,
+	bt2.month_closing as next_month_balance
+from balance_table bt1 join balance_table bt2
+on bt1.customer_id = bt2.customer_id and bt1.month_end = bt2.previous_month_end
+where bt1.orders = 1 and bt2.orders = 1 and bt1.month_closing != 0
+),
+
+percentage_table as (
+select customer_id,
+	(next_month_balance/current_month_balance - 1)*100 as changed_percentage,
+	case when (current_month_balance < next_month_balance) and
+		(next_month_balance/current_month_balance - 1)*100 > 5 then 1 else 0 end as over_5percent_count
+from compare_table
+)
+
+select round(sum(over_5percent_count)/count(over_5percent_count)::numeric*100,2) as percentage_of_customers
+from percentage_table
+````
+Answer:
+| percentage_of_customers |
+|-------------------------|
+|                  20.97  |
 
