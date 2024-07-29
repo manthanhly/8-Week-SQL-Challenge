@@ -8,9 +8,6 @@ Hint: you may want to consider using a recursive CTE to solve this problem!
 with recursive hierarchy as (
    select
        id,
-       parent_id,
-       level_text,
-       level_name,
        level_text as category_name,
        null::varchar as segment_name,
        null::varchar as style_name,
@@ -24,9 +21,6 @@ with recursive hierarchy as (
   
    select
        ph.id,
-       ph.parent_id,
-       ph.level_text,
-       ph.level_name,
        h.category_name,
        case
            when ph.level_name = 'Segment' then ph.level_text
@@ -51,19 +45,6 @@ with recursive hierarchy as (
    from product_hierarchy ph
    join hierarchy h on ph.parent_id = h.id
 )
-
-select 
-	pp.product_id,
-	pp.price,
-	concat(h.style_name,' ',h.segment_name,' - ',h.category_name),
-	h.category_id,
-	h.segment_id,
-	h.style_id,
-	h.category_name,
-	h.segment_name,
-	h.style_name
-from hierarchy h
-right join product_prices pp on h.id = pp.id
 ````
 Answer:
 | product_id | price | concat                          | category_id | segment_id | style_id | category_name | segment_name | style_name         |
