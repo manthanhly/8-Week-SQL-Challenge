@@ -45,6 +45,21 @@ with recursive hierarchy as (
    from product_hierarchy ph
    join hierarchy h on ph.parent_id = h.id
 )
+
+select 
+	pp.product_id,
+	pp.price,
+	concat(h.style_name,' ',h.segment_name,' - ',h.category_name),
+	h.category_id,
+	h.segment_id,
+	h.style_id,
+	h.category_name,
+	h.segment_name,
+	h.style_name
+from hierarchy h
+right join product_prices pp on h.id = pp.id
+
+)
 ````
 Answer:
 | product_id | price | concat                          | category_id | segment_id | style_id | category_name | segment_name | style_name         |
